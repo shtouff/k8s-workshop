@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-redcount
+  labels:
+    app: redcount
+    release: {{ .Release.Name }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redcount
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: redcount
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: shtouff/redcount:0.1.1
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config
+          mountPath: /go/src/app/redcount.yaml
+          subPath: redcount.yaml
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-redcount

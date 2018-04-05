@@ -1,0 +1,11 @@
+# Default values for redcount.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+redis:
+  usePassword: false
+  resources:
+    requests:
+      cpu: 10m
+      memory: 256Mi
